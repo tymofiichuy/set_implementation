@@ -64,10 +64,14 @@ void multitype_set::set_delete(variants el){
     if (res){
         if (res == head){
             head = res->next;
+            if(head){
+                head->prev = nullptr;  
+            }
             delete res;
         }
         else{
             res->prev->next = res->next;
+            res->next->prev = res->prev;
             delete res;  
         }
     }
@@ -87,10 +91,12 @@ multitype_set::~multitype_set(){
 }
 
 bool multitype_set::is_subset(multitype_set set){
-    while(set.head){
-        if(!this->set_search(set.head->data)){
+    node* temp = set.head;
+    while(temp){
+        if(!this->set_search(temp->data)){
             return false;
         }
+        temp = temp->next;
     }
     return true;
 }

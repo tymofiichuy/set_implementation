@@ -22,6 +22,8 @@ public:
     void set_delete(variants);
     node* set_search(variants);
     void set_clear();
+
+    //pass by reference?
     multitype_set set_union(multitype_set);
     multitype_set set_intersection(multitype_set);
     multitype_set set_difference(multitype_set);
