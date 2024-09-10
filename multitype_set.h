@@ -1,27 +1,34 @@
 #pragma once
+
 #include<variant>
 #include<string>
-//#include<any>
 
-#define variants variant<string, int, float, char, multitype_set>
+#define variants variant<char, int, float, string, multitype_set>
 
-struct node{
+class node{
+public:
     variants data;
-    //any data;
-    node* link;
+    node* next;
+    node* prev;
+
+    bool data_comparison(variants d);
 };
 
 class multitype_set{
 public:
     node* head;
-    void set_insert(variants el);
-    void set_delete(variants el);
-    bool set_search(variants el);
+
+    void set_insert(variants);
+    void set_delete(variants);
+    node* set_search(variants);
     void set_clear();
-    multitype_set set_union(multitype_set);
     multitype_set set_union(multitype_set);
     multitype_set set_intersection(multitype_set);
     multitype_set set_difference(multitype_set);
     multitype_set set_sym_difference(multitype_set);
     bool is_subset(multitype_set);
+
+    bool operator==(multitype_set);
+
+    ~multitype_set();
 };
