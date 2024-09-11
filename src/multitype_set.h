@@ -3,20 +3,21 @@
 #include<variant>
 #include<string>
 
-#define variants variant<char, int, float, string, multitype_set>
+//#define variants variant<char, int, float, string, multitype_set>;
+using variants = std::variant<char, int, float, std::string>;
 
 class node{
 public:
     variants data;
-    node* next;
-    node* prev;
+    node* next = nullptr;
+    node* prev = nullptr;
 
     bool data_comparison(variants d);
 };
 
 class multitype_set{
 public:
-    node* head;
+    node* head = nullptr;
 
     void set_insert(variants);
     void set_delete(variants);

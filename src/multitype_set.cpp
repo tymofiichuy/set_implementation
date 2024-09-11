@@ -55,7 +55,7 @@ void multitype_set::set_insert(variants el){
         }
     }
     else{
-        cerr << "Element is already in set";
+        throw invalid_argument("Element is already in set");
     }
 }
 
@@ -79,7 +79,7 @@ void multitype_set::set_delete(variants el){
         }
     }
     else{
-        cerr << "Nothing to delete";
+        throw invalid_argument("Nothing to delete");
     }
 }
 
