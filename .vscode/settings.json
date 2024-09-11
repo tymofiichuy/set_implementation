@@ -4,6 +4,7 @@
         "variant": "cpp",
         "xstring": "cpp",
         "xutility": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "stdexcept": "cpp"
     }
 }
