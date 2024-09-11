@@ -70,8 +70,11 @@ void multitype_set::set_delete(variants el){
             delete res;
         }
         else{
+            //fix for last one
             res->prev->next = res->next;
-            res->next->prev = res->prev;
+            if (res->next){
+                res->next->prev = res->prev;  
+            }
             delete res;  
         }
     }
