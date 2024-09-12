@@ -31,19 +31,6 @@ node* multitype_set::set_search(variants el){
         temp = temp->next;
     }
     return nullptr;
-
-    // while (temp->next != nullptr){
-    //     if (temp->data_comparison(el)){
-    //         return temp;
-    //     };
-    //     temp = temp->next;
-    // }
-    // if (temp->data_comparison(el)){
-    //      return temp;
-    // }
-    // else{
-    //     return nullptr;
-    // }
 }
 
 void multitype_set::set_insert(variants el){
@@ -55,7 +42,7 @@ void multitype_set::set_insert(variants el){
     }
 }
 
-//Insert without check of element existanse in set
+//Insert without check of element existance in a set
 void multitype_set::set_unsafe_insert(variants el){
     node* ref = new node;
         ref->data = el;
