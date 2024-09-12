@@ -9,7 +9,7 @@ using namespace std;
 
 string random_string(mt19937 mt){
     uniform_int_distribution<int> dist_ch (0, 25);
-    uniform_int_distribution<int> dist_len (0, 255);
+    uniform_int_distribution<int> dist_len (0, 10);
 
     string r_string;
     int len = dist_len(mt);
@@ -23,7 +23,7 @@ string random_string(mt19937 mt){
 }
 
 multitype_set* random_set(mt19937 mt, int size, multitype_set* set){
-    uniform_int_distribution<int> dist_i (0, 1000000);
+    uniform_int_distribution<int> dist_i (0, 10000);
     uniform_int_distribution<int> dist_var (0, 1);
 
     bool flag = false;
@@ -39,7 +39,7 @@ multitype_set* random_set(mt19937 mt, int size, multitype_set* set){
                         set->set_insert(i);
                         flag = true;
                     }
-                    catch(invalid_argument){  
+                    catch(invalid_argument){ 
                         continue; 
                     }
                 }
@@ -69,9 +69,9 @@ int main(){
 
     multitype_set* A = new multitype_set;
     multitype_set* B = new multitype_set;
-    int init_size = 100;
+    int init_size = 16;
 
-    for (int s_counter = 0; s_counter < 100; s_counter++){
+    for (int s_counter = 0; s_counter < 7; s_counter++){
         A = random_set(mt, init_size, A);
         B = random_set(mt, init_size, B);
 
@@ -85,7 +85,7 @@ int main(){
             s_total += chrono::duration_cast<chrono::microseconds>(end - start);
 
             start = chrono::high_resolution_clock::now();
-            A->set_difference(*B);
+            delete A->set_difference(*B);
             end = chrono::high_resolution_clock::now();
             d_total += chrono::duration_cast<chrono::microseconds>(end - start);
         }
@@ -96,7 +96,7 @@ int main(){
         cout << "Search test for " << init_size << " elements: " << s_total.count()/1000 << " microseconds\n" <<
         "Difference test for " << init_size << " elements: " << d_total.count()/1000 << " microseconds\n\n";
 
-        init_size *= 10;
+        init_size *= 2;
     }
     return 0;
 }
