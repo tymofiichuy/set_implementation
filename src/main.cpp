@@ -102,7 +102,7 @@ int main(){
     multitype_set* C = new multitype_set;
     int init_size = 25;
 
-    for (int s_counter = 0; s_counter <= 2; s_counter++){
+    for (int s_counter = 0; s_counter <= 10; s_counter++){
         A = random_set(mt, init_size, A);
         B = random_set(mt, init_size, B);
         C = random_set_with_fixed_element(mt, init_size, C, 0);
