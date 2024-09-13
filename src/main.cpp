@@ -29,7 +29,7 @@ float random_float(mt19937& mt){
 }
 
 multitype_set* random_set(mt19937& mt, int size, multitype_set* set){
-    uniform_int_distribution<int> dist_i (0, 100000);
+    uniform_int_distribution<int> dist_i (1, 100000);
     uniform_int_distribution<int> dist_var (0, 2);
 
     bool flag = false;
@@ -83,8 +83,8 @@ multitype_set* random_set(mt19937& mt, int size, multitype_set* set){
 }
 
 multitype_set* random_set_with_fixed_element (mt19937& mt, int size, multitype_set* set, variants el){
-    uniform_int_distribution<int> dist_i (0, size - 1);
-    int h_size = dist_i(mt);
+    uniform_int_distribution<int> dist_s (0, size - 1);
+    int h_size = dist_s(mt);
 
     random_set(mt, h_size, set);
     set->set_insert(el);
@@ -102,7 +102,7 @@ int main(){
     multitype_set* C = new multitype_set;
     int init_size = 25;
 
-    for (int s_counter = 0; s_counter < 11; s_counter++){
+    for (int s_counter = 0; s_counter <= 2; s_counter++){
         A = random_set(mt, init_size, A);
         B = random_set(mt, init_size, B);
         C = random_set_with_fixed_element(mt, init_size, C, 0);
@@ -126,13 +126,7 @@ int main(){
             delete A->set_difference(*B);
             end = chrono::high_resolution_clock::now();
             d_total += chrono::duration_cast<chrono::microseconds>(end - start);
-
-            //Delete this line after test!
-            if (i%100 == 0){
-                cout << i/10 << "% ";
-            }
         }
-        cout << "\n";
 
         A->set_clear();
         B->set_clear();
