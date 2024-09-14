@@ -22,14 +22,9 @@ string random_string(mt19937& mt){
     return r_string;
 }
 
-float random_float(mt19937& mt){
-    uniform_real_distribution<float> dist_f (0.0F, 1.0F);
-
-    return dist_f(mt);
-}
-
 multitype_set* random_set(mt19937& mt, int size, multitype_set* set){
     uniform_int_distribution<int> dist_i (1, 100000);
+    uniform_real_distribution<float> dist_f (0.0F, 1.0F);
     uniform_int_distribution<int> dist_var (0, 2);
 
     bool flag = false;
@@ -66,7 +61,7 @@ multitype_set* random_set(mt19937& mt, int size, multitype_set* set){
                 break;
             case 2:
                 while (!flag){
-                    float f = random_float(mt);
+                    float f = dist_f(mt);
                     try{
                         set->set_insert(f);
                         flag = true;
@@ -97,40 +92,48 @@ int main(){
     random_device rd;
     mt19937 mt (rd());
 
-    multitype_set* A = new multitype_set;
-    multitype_set* B = new multitype_set;
-    multitype_set* C = new multitype_set;
+    multitype_set A;
+    multitype_set* Ap = &A;
+    multitype_set B;//= new multitype_set;
+    multitype_set* Bp = &B; //= new multitype_set;
+    multitype_set C;
+    multitype_set* Cp = &C; //= new multitype_set;
     int init_size = 25;
 
-    for (int s_counter = 0; s_counter <= 10; s_counter++){
-        A = random_set(mt, init_size, A);
-        B = random_set(mt, init_size, B);
-        C = random_set_with_fixed_element(mt, init_size, C, 0);
+    chrono::microseconds s_np_total(0);
+    chrono::microseconds s_p_total(0);
+    chrono::microseconds d_total(0);
 
-        chrono::microseconds s_np_total(0);
-        chrono::microseconds s_p_total(0);
-        chrono::microseconds d_total(0);
+    for (int s_counter = 0; s_counter <= 14; s_counter++){
+        s_np_total = chrono::microseconds(0);
+        s_p_total = chrono::microseconds(0);
+        d_total = chrono::microseconds(0);
+
 
         for(int i = 0; i < 1000; i++){
+            random_set(mt, init_size, Ap);
+            random_set(mt, init_size, Bp);
+            random_set_with_fixed_element(mt, init_size, Cp, 0);
+
             auto start = chrono::high_resolution_clock::now();
-            A->set_search(0);
+            Ap->set_search(0);
             auto end = chrono::high_resolution_clock::now();
             s_np_total += chrono::duration_cast<chrono::microseconds>(end - start);
 
             start = chrono::high_resolution_clock::now();
-            C->set_search(0);
+            Cp->set_search(0);
             end = chrono::high_resolution_clock::now();
             s_p_total += chrono::duration_cast<chrono::microseconds>(end - start);
 
             start = chrono::high_resolution_clock::now();
-            delete A->set_difference(*B);
+            delete Ap->set_difference(*Bp);
             end = chrono::high_resolution_clock::now();
             d_total += chrono::duration_cast<chrono::microseconds>(end - start);
-        }
 
-        A->set_clear();
-        B->set_clear();
-        C->set_clear();
+            Ap->set_clear();
+            Bp->set_clear();
+            Cp->set_clear();
+        }
 
         cout << "Search test (element not present) for " << init_size << " elements: " << s_np_total.count()/1000 << " microseconds\n" <<
         "Search test (element present) for " << init_size << " elements: " << s_p_total.count()/1000 << " microseconds\n" <<
@@ -139,9 +142,9 @@ int main(){
         init_size += 100;
     }
 
-    delete A;
-    delete B;
-    delete C;
+    // delete A;
+    // delete B;
+    // delete C;
 
     return 0;
 }
