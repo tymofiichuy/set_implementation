@@ -104,7 +104,7 @@ int main(){
     chrono::microseconds s_p_total(0);
     chrono::microseconds d_total(0);
 
-    for (int s_counter = 0; s_counter <= 14; s_counter++){
+    for (int s_counter = 0; s_counter <= 10; s_counter++){
         s_np_total = chrono::microseconds(0);
         s_p_total = chrono::microseconds(0);
         d_total = chrono::microseconds(0);
@@ -135,8 +135,8 @@ int main(){
             Cp->set_clear();
         }
 
-        cout << "Search test (element not present) for " << init_size << " elements: " << s_np_total.count()/1000 << " microseconds\n" <<
-        "Search test (element present) for " << init_size << " elements: " << s_p_total.count()/1000 << " microseconds\n" <<
+        cout << "Search test (element isn't present) for " << init_size << " elements: " << s_np_total.count()/1000 << " microseconds\n" <<
+        "Search test (element is present) for " << init_size << " elements: " << s_p_total.count()/1000 << " microseconds\n" <<
         "Difference test for " << init_size << " elements: " << d_total.count()/1000 << " microseconds\n\n";
 
         init_size += 100;
