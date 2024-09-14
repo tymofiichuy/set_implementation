@@ -94,10 +94,10 @@ int main(){
 
     multitype_set A;
     multitype_set* Ap = &A;
-    multitype_set B;//= new multitype_set;
-    multitype_set* Bp = &B; //= new multitype_set;
+    multitype_set B;
+    multitype_set* Bp = &B;
     multitype_set C;
-    multitype_set* Cp = &C; //= new multitype_set;
+    multitype_set* Cp = &C;
     int init_size = 25;
 
     chrono::microseconds s_np_total(0);
@@ -141,10 +141,5 @@ int main(){
 
         init_size += 100;
     }
-
-    // delete A;
-    // delete B;
-    // delete C;
-
     return 0;
 }
